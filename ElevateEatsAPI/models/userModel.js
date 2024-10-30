@@ -1,10 +1,10 @@
 const mongoose = require ('mongoose');
 
 const userSchema = new mongoose.Schema({
-    lastName: {},
-    firstName: {},
-    middleName: {},
-    phoneNumber: {},
+    lastName: String,
+    firstName: String,
+    middleName: String,
+    phoneNumber: Number,
     emailAddress: {},
     //location, height, weight?
 });

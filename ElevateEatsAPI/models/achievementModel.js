@@ -1,3 +1,7 @@
 const mongoose = require('mongoose');
 
-//fields: id, name, description, icon_url
+const achievementSchema = new mongoose.Schema({
+    name: String,
+    description: String,
+    iconURL: String
+});
