@@ -1,1 +1,1 @@
-This file has the description of this project.
+This branch aims to set the foundational UI on which the app will be displayed graphically.
