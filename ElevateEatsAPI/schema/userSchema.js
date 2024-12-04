@@ -1,10 +1,9 @@
 const mongoose = require ('mongoose');
 
 const userSchema = new mongoose.Schema({
-    //TODO: input validation
-    lastName: String,
-    firstName: String,
+    lastName: {type: String, required: true},
+    firstName: {type: String, required: true},
     middleName: String,
-    phoneNumber: Number,
+    phoneNumber: {type: String, required: true},
     emailAddress: String,
 });
