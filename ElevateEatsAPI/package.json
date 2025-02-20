@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ralleyne531/ElevateEats.git"
+    "url": "git+https://github.com/ElevateEats/ElevateEats.git"
   },
   "author": "Rashidi Alleyne",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ralleyne531/ElevateEats/issues"
+    "url": "https://github.com/ElevateEats/ElevateEats/issues"
   },
-  "homepage": "https://github.com/ralleyne531/ElevateEats#readme",
+  "homepage": "https://github.com/ElevateEats/ElevateEats#readme",
   "dependencies": {
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
