@@ -43,6 +43,7 @@ router.param('id', (req,res,next,id) => {
     next()
 })
 
+//Add comment
 router.post('/:id/comments', (req, res, next) => {
     if(Object.keys(req.body).length === 0){
         console.log("There was an error creating this comment, match type: JSON")
@@ -53,6 +54,7 @@ router.post('/:id/comments', (req, res, next) => {
     }
 })
 
+//Add like
 router.post('/:id/likes', (req, res, next) => {
     if(Object.keys(req.body).length === 0){
         console.log("There was an error liking this post, match type: JSON")
