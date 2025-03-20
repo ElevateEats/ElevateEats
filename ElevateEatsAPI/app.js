@@ -6,8 +6,6 @@ const port = 3000
 const postsRouter = require('./routes/posts')
 const achievementsRouter = require('./routes/achievements')
 const logger = require('./utils/logger')
-const {MongoClient} = require("mongodb");
-const client = new MongoClient(process.env.MONGODB_URI);
 
 app.use(express.static("public"))
 app.use(express.urlencoded({extended : true}))
@@ -19,10 +17,8 @@ app.set('view engine', 'ejs')
 app.get('/', (req, res) => {
     res.status(200).send(`Hello World! ${res.statusCode}`)
 })
-client.connect().then(r => {
-    logger.info("Pinged your deployment. You successfully connected to MongoDB!");
-    app.listen(port, () =>{
+app.listen(port, () =>{
         logger.info(`Elevate Eats listening on port ${port}`);
-})});
+});
 
 
