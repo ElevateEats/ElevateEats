@@ -76,24 +76,27 @@ router.post('/', async (req,res) => {
 
 
 //Add comment
-router.post('/:id/comments', (req, res, next) => {
-    if(Object.keys(req.body).length === 0){
-        console.log("There was an error creating this comment, match type: JSON")
-        res.status(404).send('404 Bad Request')
-    }else{
-    console.log(req.body)
-    res.status(202).json(req.body)
+router.post('/:id/comments', async (req, res, next) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        post.comments.push(req.body); // { userID, content }
+        await post.save();
+        res.status(201).json({ message: 'Comment added', post });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 })
 
 //Add like
-router.post('/:id/likes', (req, res, next) => {
-    if(Object.keys(req.body).length === 0){
-        console.log("There was an error liking this post, match type: JSON")
-        res.status(404).send('404 Bad Request')
-    }else{
-    console.log(req.body.likes)
-    res.status(202).json(req.body.likes)
+router.post('/:id/upvotes', async (req, res, next) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        post.upvotes.push({ userID: req.body.userID });
+        await post.save();
+        res.status(201).json({ message: 'Post upvoted', post });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 })
-  module.exports = router
+
+export default router;
