@@ -7,3 +7,6 @@ const userSchema = new mongoose.Schema({
     phoneNumber: {type: String, required: true},
     emailAddress: String,
 });
+
+const User = mongoose.model("User", userSchema)
+export default User;

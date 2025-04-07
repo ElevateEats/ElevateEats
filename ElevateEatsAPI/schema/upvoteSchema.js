@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const {Timestamp} = require("mongodb");
 
 const upvoteSchema = new mongoose.Schema({
-    postID: mongoose.Schema.Types.ObjectId, ref: 'posts',
-    userID: mongoose.Schema.Types.ObjectId, ref: 'users',
-    timestamp: Timestamp
+    postID: {type: mongoose.Schema.Types.ObjectId, ref: 'posts'},
+    userID: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+    timestamp: {type: Date, default: Date.now }
 })
+
+const UpVote = mongoose.model('Like', upvoteSchema)
+
+export default UpVote;

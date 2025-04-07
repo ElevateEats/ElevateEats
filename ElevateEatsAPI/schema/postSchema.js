@@ -1,9 +1,11 @@
-const mongoose = require('mongoose');
-const {Timestamp} = require("mongodb");
+import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema({
-    userID: mongoose.Schema.Types.ObjectId, ref: 'users',
+    userID: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
     content: String,
     imageURL: String,
-    timestamp: Timestamp
+    timestamp: {type: Date, default: Date.now },
 });
+
+const Post = mongoose.model('Post', postSchema);
+export default Post;

@@ -5,3 +5,6 @@ const achievementSchema = new mongoose.Schema({
     description: String,
     iconURL: String
 });
+
+const Acheivement = mongoose.model('Achievement', achievementSchema)
+export default Achievement;
