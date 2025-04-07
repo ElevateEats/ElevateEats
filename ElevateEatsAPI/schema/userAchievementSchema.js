@@ -1,8 +1,10 @@
-const mongoose = require('mongoose');
-const {Timestamp} = require("mongodb");
+import mongoose from 'mongoose';
 
 const userAchievementSchema = new mongoose.Schema({
-    userID: mongoose.Schema.Types.ObjectId, ref: 'users',
-    achievementID: mongoose.Schema.Types.ObjectId, ref: 'achievements',
-    timestamp: Timestamp
-});
+    userID: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    achievementID: {type: mongoose.Schema.Types.ObjectId, ref: 'Achievement'},
+    timestamp: {type: Date, default: Date.now }
+}, { collection: 'userAchievements' });
+
+const UserAchievement = mongoose.model("UserAchievement", userAchievementSchema)
+export default UserAchievement;
