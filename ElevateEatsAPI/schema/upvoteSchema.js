@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const {Timestamp} = require("mongodb");
 
 const upvoteSchema = new mongoose.Schema({
     postID: {type: mongoose.Schema.Types.ObjectId, ref: 'posts'},
