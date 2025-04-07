@@ -2,7 +2,6 @@ import express from 'express';
 import logger from "../utils/logger.js";
 import Achievement from "../schema/achievementSchema.js";
 
-
 const router = express.Router()
 
 router.use(express.json())

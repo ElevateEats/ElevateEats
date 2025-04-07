@@ -2,6 +2,7 @@ import express from 'express'
 // import { getUsers } from '../controllers/postController.js'
 import Post from "../schema/postSchema.js";
 import logger from "../utils/logger.js";
+
 const router = express.Router()
 
 router.use(express.json())

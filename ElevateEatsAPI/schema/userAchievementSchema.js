@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const userAchievementSchema = new mongoose.Schema({
     userID: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
