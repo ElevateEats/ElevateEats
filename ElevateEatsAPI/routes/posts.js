@@ -1,4 +1,7 @@
-const express = require('express')
+import express from 'express'
+// import { getUsers } from '../controllers/postController.js'
+import Post from "../schema/postSchema.js";
+import logger from "../utils/logger.js";
 const router = express.Router()
 
 router.use(express.json())
@@ -19,29 +22,58 @@ const posts = [
     }
 ]
 
- //Static Routes
- //Create Post
-router.post('/', (req,res) => {
-    if(Object.keys(req.body).length === 0){
-        console.log("There was an error creating this post, match type: JSON")
-        res.status(404).send('404 Bad Request')
-    }else{
-    console.log(req.body)
-    posts.push(req.body)
-    res.status(202).json(req.body)
+//Static Routes
+
+//Get All Posts
+router.get('/', async (req, res) => {
+    try {
+        const posts = await Post.find({});
+        res.json(posts);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 })
 
-//Get Posts
-router.get('/', (req, res) => {
-    res.send(posts)
-  })
 
 //Saving post information through middleware
-router.param('id', (req,res,next,id) => {
-    req.post = posts[id]
-    next()
+router.param('id', async (req,res,next, id) => {
+    try {
+        const post = await Post.findById(id);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        req.post = post;
+        next();
+    } catch (error) {
+        return res.status(400).json({ message: 'Invalid post ID' });
+    }
 })
+
+//Get A Post
+router.get('/:id', (req, res) => {
+    res.status(200).json(req.post);
+})
+
+//Create Post
+router.post('/', async (req,res) => {
+    try {
+        if (Object.keys(req.body).length === 0) {
+            logger.error("There was an error creating this post, match type: JSON")
+            return res.status(400).json({error: 'Empty request body'});
+        }
+
+        const newPost = await Post.create(req.body);
+        res.status(201).json({
+            message: 'Post created successfully',
+            post: newPost,
+        });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error creating post' });
+    }
+});
+
 
 //Add comment
 router.post('/:id/comments', (req, res, next) => {

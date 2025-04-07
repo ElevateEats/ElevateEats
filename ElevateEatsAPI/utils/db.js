@@ -1,25 +1,15 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
-const logger = require('../utils/logger')
+import mongoose from "mongoose";
+import logger from '../utils/logger.js'
 
 const URI = process.env.MONGODB_URI || "";
-const client = new MongoClient(URI, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    },
-});
+const connectDB = async () => {
+    try{
+        const connect = await mongoose.connect(URI)
+        logger.info(`MongoDB Connected ${connect.connection.host}`);
+    } catch (error) {
+        logger.error(`Error connecting to MongoDB ${error.message}`)
+        process.exit(1)
+    }
+};
 
-try {
-
-    await client.connect();
-
-    await client.db("admin").command({ ping: 1 });
-    logger.info("Pinged your deployment. You successfully connected to ElevateEats!");
-} catch (err) {
-    logger.error(err);
-}
-
-let db = client.db("ElevateEatsAPI");
-
-export default db;
+export default connectDB;
