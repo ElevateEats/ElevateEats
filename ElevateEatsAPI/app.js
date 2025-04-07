@@ -1,16 +1,17 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express'
-import dotenv from 'dotenv'
 import connectDB from './utils/db.js'
 
 import postsRouter from './routes/posts.js';
 import achievementsRouter from './routes/achievements.js';
 import logger from './utils/logger.js'
 
-dotenv.config();
+
 const app = express()
 const port = process.env.PORT || 3000
-
-await connectDB();
+await connectDB(process.env.MONGODB_URI);
 
 app.use(express.static("public"))
 app.use(express.urlencoded({extended : true}))
