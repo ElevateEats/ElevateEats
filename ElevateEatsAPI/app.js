@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import logger from './utils/logger.js'
 import express from 'express'
 import connectDB from './utils/db.js'
-import apiKeyAuth from "./utils/apiKeyAuth.js";
+import apiKeyAuth from "./middleware/apiKeyAuth.js";
 import postsRouter from './routes/posts.js';
 import achievementsRouter from './routes/achievements.js';
 
