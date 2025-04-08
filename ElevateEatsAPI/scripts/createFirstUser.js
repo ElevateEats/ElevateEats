@@ -14,7 +14,9 @@ if (existing) {
 
 const newUser = new User({
     username: 'rashidi',
-    email: 'ralleyne531@gmail.com',
+    firstName:'rashidi',
+    lastName: 'a',
+    phoneNumber: '6096185984',
     isAdmin: true,
 });
 
