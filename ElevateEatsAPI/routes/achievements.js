@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.use(express.json())
 
-router.post('/', async (req,res,next) =>{
+router.post('/', async (req,res) =>{
     //Create achievement
     try {
         if (Object.keys(req.body).length === 0) {
@@ -15,13 +15,14 @@ router.post('/', async (req,res,next) =>{
         }
 
         const newAchievement = await Achievement.create(req.body);
+        logger.info(`Created new achievement with ID: ${newAchievement._id}`);
         res.status(201).json({
             message: 'Post created successfully',
             achievement: newAchievement,
         });
     }
-    catch (err) {
-        console.error(err);
+    catch (erorr) {
+        logger.error(error);
         res.status(500).json({ error: 'Server error creating achievement' });
     }
 })
