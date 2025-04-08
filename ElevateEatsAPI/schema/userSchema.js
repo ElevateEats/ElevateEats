@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
     middleName: String,
     phoneNumber: {type: String, required: true},
     emailAddress: String,
+    isAdmin: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now }
 });
 
 const User = mongoose.model("User", userSchema)
