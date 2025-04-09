@@ -2,7 +2,9 @@ import dotenv from 'dotenv';
 import logger from './utils/logger.js'
 import express from 'express'
 import connectDB from './utils/db.js'
+import jwtAuth from "./middleware/authMiddleware.js";
 import apiKeyAuth from "./middleware/apiKeyAuth.js";
+import loginRouter from './routes/login.js';
 import postsRouter from './routes/posts.js';
 import achievementsRouter from './routes/achievements.js';
 
@@ -20,9 +22,11 @@ app.get('/', (req, res) => {
     res.status(200).send(`Hello World! ${res.statusCode}`)
 });
 
-app.use(apiKeyAuth);
+app.use('/login', loginRouter)
+app.use(jwtAuth);
 app.use('/posts', postsRouter)
 app.use('/achievements', achievementsRouter)
+app.use(apiKeyAuth)
 
 app.set('view engine', 'ejs')
 
