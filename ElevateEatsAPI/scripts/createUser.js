@@ -1,4 +1,4 @@
-// scripts/createFirstUser.js
+// scripts/createUser.js
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import User from '../schema/userSchema.js';
@@ -13,11 +13,11 @@ if (existing) {
 }
 
 const newUser = new User({
-    username: 'rashidi',
-    firstName:'rashidi',
-    lastName: 'a',
-    phoneNumber: '6096185984',
-    isAdmin: true,
+    username: 'johnDoe',
+    firstName:'john',
+    lastName: 'Doe',
+    phoneNumber: '1234567890',
+    isAdmin: false,
 });
 
 await newUser.save();

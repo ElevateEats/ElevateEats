@@ -7,7 +7,7 @@ import User from '../schema/userSchema.js';
 dotenv.config();
 await mongoose.connect(process.env.MONGODB_URI);
 
-const user = await User.findOne({ phoneNumber: '6096185984' });
+const user = await User.findOne({ phoneNumber: 'x' });
 if (!user) {
     console.log('User not found');
     process.exit();
