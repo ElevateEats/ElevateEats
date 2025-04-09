@@ -23,9 +23,11 @@ app.get('/', (req, res) => {
 });
 
 app.use('/login', loginRouter)
+
 app.use(jwtAuth);
 app.use('/posts', postsRouter)
 app.use('/achievements', achievementsRouter)
+
 app.use(apiKeyAuth)
 
 app.set('view engine', 'ejs')
