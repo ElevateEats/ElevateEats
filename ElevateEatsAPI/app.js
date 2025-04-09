@@ -7,6 +7,7 @@ import apiKeyAuth from "./middleware/apiKeyAuth.js";
 import loginRouter from './routes/login.js';
 import postsRouter from './routes/posts.js';
 import achievementsRouter from './routes/achievements.js';
+import usersRouter from './routes/users.js'
 
 dotenv.config();
 
@@ -23,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/login', loginRouter)
-
+app.use('/users', usersRouter)
 app.use(jwtAuth);
 app.use('/posts', postsRouter)
 app.use('/achievements', achievementsRouter)
