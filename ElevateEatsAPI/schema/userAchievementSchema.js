@@ -1,16 +1,19 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userAchievementSchema = new mongoose.Schema(
-  {
-    userID: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    achievementID: { type: mongoose.Schema.Types.ObjectId, ref: "Achievement" },
-    timestamp: { type: Date, default: Date.now },
-  },
-  { collection: "userAchievements" },
+    {
+        userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        achievementID: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Achievement',
+        },
+        timestamp: { type: Date, default: Date.now },
+    },
+    { collection: 'userAchievements' },
 );
 
 const UserAchievement = mongoose.model(
-  "UserAchievement",
-  userAchievementSchema,
+    'UserAchievement',
+    userAchievementSchema,
 );
 export default UserAchievement;
