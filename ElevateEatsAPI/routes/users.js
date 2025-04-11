@@ -1,8 +1,8 @@
-import express from 'express'
-import User from "../schema/userSchema.js";
-import logger from "../utils/logger.js";
-const router =  express.Router()
-router.use(express.json())
+import express from 'express';
+import User from '../schema/userSchema.js';
+import logger from '../utils/logger.js';
+const router = express.Router();
+router.use(express.json());
 
 router.get('/', async (req, res) => {
     try {
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.param('id', async (req,res,next,id) => {
+router.param('id', async (req, res, next, id) => {
     try {
         const user = await User.findById(id);
         if (!user) {
@@ -25,7 +25,7 @@ router.param('id', async (req,res,next,id) => {
         req.user = user;
         next();
     } catch (error) {
-        logger.error(`Invalid user ID: ${id}`);
+        logger.error(`Invalid user ID: ${id}\n${error}`);
         return res.status(400).json({ message: 'Invalid user ID' });
     }
 });
@@ -56,9 +56,13 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        });
         if (!user) {
-            logger.warn(`Attempted update but user not found: ${req.params.id}`);
+            logger.warn(
+                `Attempted update but user not found: ${req.params.id}`,
+            );
             return res.status(404).json({ message: 'User not found' });
         }
         logger.info(`Updated user: ${user._id}`);
@@ -73,7 +77,9 @@ router.delete('/id', async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         if (!user) {
-            logger.warn(`Attempted delete but user not found: ${req.params.id}`);
+            logger.warn(
+                `Attempted delete but user not found: ${req.params.id}`,
+            );
             return res.status(404).json({ message: 'User not found' });
         }
         logger.info(`Deleted user: ${req.params.id}`);
