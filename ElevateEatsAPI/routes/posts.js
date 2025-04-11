@@ -45,8 +45,8 @@ router.param('id', async (req,res,next, id) => {
         req.post = post;
         next();
     } catch (error) {
-        logger.error(`Invalid post ID: ${id}`);
-        return res.status(400).json({ message: 'Invalid post ID' });
+        logger.error(`Invalid post ID: ${id}\n${error}`);
+        return res.status(400).json({ message: `Invalid post ID` });
     }
 })
 

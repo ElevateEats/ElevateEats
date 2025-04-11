@@ -21,7 +21,7 @@ router.post('/', async (req,res) =>{
             achievement: newAchievement,
         });
     }
-    catch (erorr) {
+    catch (error) {
         logger.error(error);
         res.status(500).json({ error: 'Server error creating achievement' });
     }

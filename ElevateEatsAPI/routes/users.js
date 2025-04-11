@@ -25,7 +25,7 @@ router.param('id', async (req,res,next,id) => {
         req.user = user;
         next();
     } catch (error) {
-        logger.error(`Invalid user ID: ${id}`);
+        logger.error(`Invalid user ID: ${id}\n${error}`);
         return res.status(400).json({ message: 'Invalid user ID' });
     }
 });
