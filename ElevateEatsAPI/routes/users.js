@@ -42,11 +42,33 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ error: 'Empty request body' });
         }
 
+        const { username, firstName, lastName, phoneNumber, password } = req.body;
+
+        // Validate that all required fields are present
+        if (!username || !firstName || !lastName || !phoneNumber || !password) {
+            return res.status(400).json({ error: 'Please provide all required fields (username, first name, last name, phone number, password)' });
+        }
+
+        // Check if the username already exists
+        const userExists = await User.findOne({ username });
+        if (userExists) {
+            return res.status(400).json({ error: 'Username already taken' });
+        }
+
         const newUser = await User.create(req.body);
+
         logger.info(`Created user: ${newUser._id}`);
         res.status(201).json({
             message: 'User created successfully',
-            user: newUser,
+            user: {
+                username: newUser.username,
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
+                phoneNumber: newUser.phoneNumber,
+                emailAddress: newUser.emailAddress,
+                isAdmin: newUser.isAdmin,
+                createdAt: newUser.createdAt,
+            },
         });
     } catch (error) {
         logger.error(`Server error creating user: ${error.message}`);
