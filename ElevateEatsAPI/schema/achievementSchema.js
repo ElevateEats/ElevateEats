@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const achievementSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -6,5 +6,5 @@ const achievementSchema = new mongoose.Schema({
     iconURL: String,
 });
 
-const Achievement = mongoose.model("Achievement", achievementSchema);
+const Achievement = mongoose.model('Achievement', achievementSchema);
 export default Achievement;

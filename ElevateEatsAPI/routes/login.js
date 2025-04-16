@@ -9,7 +9,9 @@ router.post('/', async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
-        return res.status(400).json({ error: 'Please provide both username and password' });
+        return res
+            .status(400)
+            .json({ error: 'Please provide both username and password' });
     }
 
     try {
@@ -27,7 +29,11 @@ router.post('/', async (req, res) => {
         }
 
         // Create a JWT token
-        const token = jwt.sign({ userId: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { userId: user._id, username: user.username },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' },
+        );
 
         res.json({ token });
     } catch (err) {
