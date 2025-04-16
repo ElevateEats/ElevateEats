@@ -1,23 +1,23 @@
-import express from 'express'
+import express from 'express';
 // import { getUsers } from '../controllers/postController.js'
-import Post from "../schema/postSchema.js";
-import logger from "../utils/logger.js";
+import Post from '../schema/postSchema.js';
+import logger from '../utils/logger.js';
 
-const router = express.Router()
-router.use(express.json())
+const router = express.Router();
+router.use(express.json());
 
 //Get All Posts
 //Future postControllerExample
 //router.get('/', postController.getUsers)
 //class PostController {
-    //static getUsers = async (req, res) => {
-    //   try {
-    //     const users = await User.find({});
-    //     res.json(users);
-    //   }
-    //   catch (err) {
-    //     res.status(500).json({ error: err.message });
-    //      }
+//static getUsers = async (req, res) => {
+//   try {
+//     const users = await User.find({});
+//     res.json(users);
+//   }
+//   catch (err) {
+//     res.status(500).json({ error: err.message });
+//      }
 //  };
 //}
 
@@ -31,11 +31,10 @@ router.get('/', async (req, res) => {
         logger.error(`Error fetching posts: ${err.message}`);
         res.status(500).json({ error: err.message });
     }
-})
-
+});
 
 //Saving post information through middleware
-router.param('id', async (req,res,next, id) => {
+router.param('id', async (req, res, next, id) => {
     try {
         const post = await Post.findById(id);
         if (!post) {
@@ -45,19 +44,19 @@ router.param('id', async (req,res,next, id) => {
         req.post = post;
         next();
     } catch (error) {
-        logger.error(`Invalid post ID: ${id}`);
-        return res.status(400).json({ message: 'Invalid post ID' });
+        logger.error(`Invalid post ID: ${id}\n${error}`);
+        return res.status(400).json({ message: `Invalid post ID` });
     }
-})
+});
 
 //Get A Post
 router.get('/:id', (req, res) => {
     logger.info(`Fetched post with ID: ${req.post._id}`);
     res.status(200).json(req.post);
-})
+});
 
 //Create Post
-router.post('/', async (req,res) => {
+router.post('/', async (req, res) => {
     try {
         if (Object.keys(req.body).length === 0) {
             logger.error('Attempted to create post with empty request body');
@@ -76,7 +75,6 @@ router.post('/', async (req,res) => {
     }
 });
 
-
 //Add comment
 router.post('/:id/comments', async (req, res) => {
     try {
@@ -89,7 +87,7 @@ router.post('/:id/comments', async (req, res) => {
         logger.error(`Error adding comment: ${error.message}`);
         res.status(500).json({ error: error.message });
     }
-})
+});
 
 //Add like
 router.post('/:id/upvotes', async (req, res) => {
@@ -97,12 +95,14 @@ router.post('/:id/upvotes', async (req, res) => {
         const post = await Post.findById(req.params.id);
         post.upvotes.push({ userID: req.body.userID });
         await post.save();
-        logger.info(`Added upvote to post ${req.params.id} by user ${req.body.userID}`);
+        logger.info(
+            `Added upvote to post ${req.params.id} by user ${req.body.userID}`,
+        );
         res.status(201).json({ message: 'Post upvoted', post });
     } catch (error) {
         logger.error(`Error adding upvote: ${error.message}`);
         res.status(500).json({ error: error.message });
     }
-})
+});
 
 export default router;

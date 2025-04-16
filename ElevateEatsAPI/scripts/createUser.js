@@ -14,7 +14,7 @@ if (existing) {
 
 const newUser = new User({
     username: 'johnDoe',
-    firstName:'john',
+    firstName: 'john',
     lastName: 'Doe',
     phoneNumber: '1234567890',
     isAdmin: false,

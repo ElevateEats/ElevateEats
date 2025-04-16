@@ -9,10 +9,15 @@ const apiKeyAuth = async (req, res, next) => {
     }
 
     try {
-        const apiKeyDoc = await ApiKey.findOne({ key, isActive: true }).populate('userID');
+        const apiKeyDoc = await ApiKey.findOne({
+            key,
+            isActive: true,
+        }).populate('userID');
 
         if (!apiKeyDoc) {
-            return res.status(403).json({ error: 'Invalid or inactive API key' });
+            return res
+                .status(403)
+                .json({ error: 'Invalid or inactive API key' });
         }
 
         // Update last used timestamp
