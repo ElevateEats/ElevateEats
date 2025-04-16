@@ -1,13 +1,13 @@
-import express from 'express';
-import User from '../schema/userSchema.js';
-import logger from '../utils/logger.js';
+import express from "express";
+import User from "../schema/userSchema.js";
+import logger from "../utils/logger.js";
 const router = express.Router();
 router.use(express.json());
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const users = await User.find({});
-        logger.info('Fetched all users');
+        logger.info("Fetched all users");
         res.json(users);
     } catch (error) {
         logger.error(`Error fetching users: ${error.message}`);
@@ -15,46 +15,46 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.param('id', async (req, res, next, id) => {
+router.param("id", async (req, res, next, id) => {
     try {
         const user = await User.findById(id);
         if (!user) {
             logger.warn(`User not found with ID: ${id}`);
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: "User not found" });
         }
         req.user = user;
         next();
     } catch (error) {
         logger.error(`Invalid user ID: ${id}\n${error}`);
-        return res.status(400).json({ message: 'Invalid user ID' });
+        return res.status(400).json({ message: "Invalid user ID" });
     }
 });
 
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
     logger.info(`Fetched user with ID: ${req.user._id}`);
     res.status(200).json(req.user);
 });
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         if (Object.keys(req.body).length === 0) {
-            logger.error('Attempted to create user with empty request body');
-            return res.status(400).json({ error: 'Empty request body' });
+            logger.error("Attempted to create user with empty request body");
+            return res.status(400).json({ error: "Empty request body" });
         }
 
         const newUser = await User.create(req.body);
         logger.info(`Created user: ${newUser._id}`);
         res.status(201).json({
-            message: 'User created successfully',
+            message: "User created successfully",
             user: newUser,
         });
     } catch (error) {
         logger.error(`Server error creating user: ${error.message}`);
-        res.status(500).json({ error: 'Server error creating user' });
+        res.status(500).json({ error: "Server error creating user" });
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put("/:id", async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
@@ -63,7 +63,7 @@ router.put('/:id', async (req, res) => {
             logger.warn(
                 `Attempted update but user not found: ${req.params.id}`,
             );
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: "User not found" });
         }
         logger.info(`Updated user: ${user._id}`);
         res.json(user);
@@ -73,17 +73,17 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete('/id', async (req, res) => {
+router.delete("/id", async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         if (!user) {
             logger.warn(
                 `Attempted delete but user not found: ${req.params.id}`,
             );
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: "User not found" });
         }
         logger.info(`Deleted user: ${req.params.id}`);
-        res.json({ message: 'User deleted successfully' });
+        res.json({ message: "User deleted successfully" });
     } catch (error) {
         logger.error(`Error deleting user: ${error.message}`);
         res.status(500).json({ error: error.message });
