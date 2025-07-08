@@ -6,22 +6,6 @@ import logger from '../utils/logger.js';
 const router = express.Router();
 router.use(express.json());
 
-//Get All Posts
-//Future postControllerExample
-//router.get('/', postController.getUsers)
-//class PostController {
-//static getUsers = async (req, res) => {
-//   try {
-//     const users = await User.find({});
-//     res.json(users);
-//   }
-//   catch (err) {
-//     res.status(500).json({ error: err.message });
-//      }
-//  };
-//}
-
-//export default postController
 router.get('/', async (req, res) => {
     try {
         const posts = await Post.find({});
